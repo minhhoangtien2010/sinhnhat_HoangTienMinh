@@ -639,6 +639,54 @@ body.gated { overflow: hidden; }
 .wish-chips { flex-direction: column; }
 .wish-chips button { text-align: left; border-radius: 12px; padding: 8px 12px; font: 500 13.5px/1.45 var(--f-head); }
 .wish-chips-h { margin: 0; font: 400 12.5px/1.45 var(--f-body); color: var(--ink-soft); }
+/* ===== Bố cục theo thiết bị: điện thoại là các trang nhỏ có thanh chọn dưới đáy, máy tính là hai thẻ cạnh nhau ===== */
+.pane { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+.pane-off { display: none !important; }
+.stage { display: block; }
+.card2 { display: none; }
+.when { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; width: 100%; }
+.when span { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; font: 600 13px var(--f-body); color: var(--navy); background: #fff9ea; border: 1px solid #e3c98a; border-radius: 99px; box-shadow: 0 2px 6px rgba(20, 39, 90, .08); }
+.cta { width: 100%; justify-content: center; }
+
+.tabs { display: flex; gap: 4px; justify-content: space-around; z-index: 12; }
+.tabs button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 2px 6px; border: 0; background: none; color: var(--ink-soft); font: 600 11px var(--f-body); border-radius: 12px; cursor: pointer; position: relative; transition: color .2s, background .2s, transform .15s; }
+.tabs button i { font-style: normal; font-size: 20px; line-height: 1.1; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+.tabs button[aria-selected="true"] { color: var(--navy); background: #f1e4c4; }
+.tabs button[aria-selected="true"] i { transform: translateY(-2px) scale(1.15); }
+.tabs button:active { transform: scale(.94); }
+.tabs .dot2 { position: absolute; top: 4px; right: 22%; width: 9px; height: 9px; border-radius: 50%; background: #c8553d; box-shadow: 0 0 0 2px #fff; display: none; }
+.tabs .dot2.on { display: block; animation: pop .4s ease; }
+
+/* Điện thoại và máy tính bảng dọc: thanh chọn cố định ở đáy */
+html:not(.wide) .tabs { position: fixed; left: 0; right: 0; bottom: 0; max-width: 520px; margin: 0 auto; padding: 6px 10px calc(6px + env(safe-area-inset-bottom, 0px)); background: rgba(251, 247, 236, .94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid #e3c98a; border-radius: 18px 18px 0 0; box-shadow: 0 -8px 24px rgba(20, 39, 90, .14); }
+html:not(.wide) body { padding-bottom: 76px; }
+html:not(.wide) .toast { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
+html:not(.wide) .tp-hint { bottom: 92px; }
+html:not(.wide) .pane:not(.pane-off), html:not(.wide) .top:not(.pane-off) { animation: tabin .4s ease; }
+@keyframes tabin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Máy tính: hai thẻ cạnh nhau, khổ ngang */
+html.wide .stage { display: flex; align-items: flex-start; justify-content: center; gap: 28px; max-width: 1180px; margin: 0 auto; padding: 0 20px 40px; }
+html.wide .stage > .card { flex: 0 0 520px; margin: 0; }
+html.wide .card2 { display: block; position: relative; flex: 1 1 560px; max-width: 640px; min-width: 0; margin: 0; padding: 0 0 22px; }
+html.wide .card2 .body { padding: 8px clamp(22px, 3vw, 38px) 8px; }
+html.wide .topbar { max-width: 1140px; }
+html.wide .tabs { position: sticky; top: 74px; margin: 0 14px; padding: 8px; background: rgba(251, 247, 236, .96); border: 1px solid #e3c98a; border-radius: 16px; box-shadow: 0 6px 18px rgba(20, 39, 90, .12); z-index: 9; }
+html.wide .card2 .tabs { margin: 16px 18px 10px; }
+html.wide .tabs button[data-t="a"] { display: none; }
+html.wide .tabs button { flex-direction: row; justify-content: center; gap: 8px; font-size: 14px; padding: 10px 6px; }
+html.wide .tabs button i { font-size: 18px; }
+html.wide .cta { display: none; }
+html.wide .tp-hint { display: none; }
+html.wide .card2::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(360px 220px at 100% 0, rgba(227, 201, 138, .3), transparent 70%), radial-gradient(360px 240px at 0 100%, rgba(157, 180, 218, .3), transparent 70%); }
+html.wide .card2 > * { position: relative; }
+html.wide .card2 .bottom { margin-top: 6px; }
+@media (min-width: 1000px) { .ambient .ab { opacity: .4; } }
+@media (prefers-reduced-motion: reduce) { html:not(.wide) .pane, html:not(.wide) .top { animation: none !important; } }
+#jump-games { display: none; }
+html.wide .card2 .deco-band { margin-top: 0; }
+html.wide .card2 .body { padding-top: 14px; }
+#word-form, #used { display: none !important; }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -1016,11 +1064,12 @@ body.gated { overflow: hidden; }
         <details class="rules">
           <summary>Luật chơi</summary>
           <ul>
-            <li>Chơi theo vòng tròn các khách đang trực tuyến. Đến lượt ai thì điện thoại người đó sáng nút, cả bàn nhìn thấy đồng hồ 3 giây và tên người đang nối.</li>
-            <li><b>Nối từ ghép:</b> từ đầu tiên là “Bắt đầu”, người kế tiếp lấy tiếng cuối để nối thành từ mới, ví dụ “Đầu xù”, rồi “Xù lông”.</li>
-            <li><b>Theo chủ đề:</b> trang đưa ra 1 chủ đề, ví dụ tên các loại bia hoặc tên ca sĩ. Lần lượt kể tên.</li>
-            <li><b>Phạt:</b> quá 3 giây không nghĩ ra, nói từ vô nghĩa hoặc lặp lại từ đã dùng thì uống. Ly phạt tự ghi vào Bảng ly phạt.</li>
-            <li>Có thể gõ từ vào ô để trang tự kiểm tra lặp từ và tiếng đầu. Nếu nói miệng thì bấm “Đã nối xong”.</li>
+            <li>Trang này chỉ <b>quay từ ngẫu nhiên</b> và tính lượt, cả bàn chơi bằng miệng ngoài đời. Không cần gõ gì lên thiệp.</li>
+            <li>Chơi theo vòng tròn các khách đang trực tuyến. Điện thoại nào cũng thấy từ đang quay, tên người đến lượt và đồng hồ 3 giây.</li>
+            <li><b>Nối từ ghép:</b> từ đầu tiên do trang quay ra. Người kế tiếp nói miệng một từ bắt đầu bằng tiếng cuối của từ trước, ví dụ “Đầu xù”, rồi “Xù lông”.</li>
+            <li><b>Theo chủ đề:</b> trang quay ra 1 chủ đề, ví dụ tên các loại bia hoặc tên ca sĩ. Lần lượt kể tên.</li>
+            <li><b>Phạt:</b> quá 3 giây không nghĩ ra, nói từ vô nghĩa hoặc lặp lại từ đã dùng thì uống. Ai cũng có thể bấm “Bí hoặc quá 3 giây” cho người đang đến lượt, ly phạt tự ghi vào Bảng ly phạt.</li>
+            <li>Nói xong thì bấm “Xong, lượt kế” để chuyển lượt cho người tiếp theo.</li>
           </ul>
         </details>
         <div class="seg" role="group" aria-label="Chế độ chơi">
@@ -1094,6 +1143,7 @@ body.gated { overflow: hidden; }
         <button class="btn ghost" id="love-timer" type="button" hidden>Bấm giờ</button>
         <div class="who" id="who-love"></div>
         <button class="btn big" id="love-draw" type="button">Rút lá bài ngẫu nhiên</button>
+        <button class="btn big danger" id="love-lose" type="button" disabled>Tôi thua hoặc không làm được: tự ghi 1 ly</button>
         <button class="btn big ghost" id="love-done" type="button" disabled>Đã xong / Chuyển lượt</button>
         <div class="stat"><span>Lá còn lại trong bộ</span><b id="love-left">0</b></div>
       </div>
@@ -1754,7 +1804,7 @@ var Net = (function () {
       case "love": var c = LOVE[o.idx]; return b + " rút lá «" + esc(c ? c.n : "?") + "»";
       case "ban": return b + " quay từ cấm: " + o.words.map(function (w) { return "«" + esc(w) + "»"; }).join(", ");
       case "slip": return "<b>" + esc(o.to) + "</b> lỡ miệng, bị " + esc(o.by) + " bắt! Uống ngay";
-      case "drink": return b + (o.d > 0 ? " ghi " + o.d + " ly cho " : " trừ 1 ly của ") + "<b>" + esc(o.to) + "</b>";
+      case "drink": if (o.auto) return "<b>" + esc(o.to) + "</b> được tự động ghi " + o.d + " ly" + (o.why ? " (" + esc(o.why) + ")" : ""); return b + (o.d > 0 ? " ghi " + o.d + " ly cho " : " trừ 1 ly của ") + "<b>" + esc(o.to) + "</b>";
       case "chain": return b + " bắt đầu Nối từ 3 giây (" + (o.mode === "topic" ? "theo chủ đề" : "nối từ ghép") + ")";
       case "chainfail": return "<b>" + esc(o.n) + "</b> phải uống: " + esc(o.reason);
       case "kim": return b + " dùng Kim Bài Miễn Uống";
@@ -1782,7 +1832,7 @@ var Net = (function () {
     clearTimeout(toastT); toastT = setTimeout(hideToast, 7500);
   }
   $("toast-x").addEventListener("click", hideToast);
-  $("toast-go").addEventListener("click", function () { hideToast(); if (toastTab === "wish") { $("wishes").scrollIntoView({ behavior: "smooth", block: "start" }); return; } if (toastTab) { openTab(toastTab); $("games").scrollIntoView({ behavior: "smooth", block: "start" }); } });
+  $("toast-go").addEventListener("click", function () { hideToast(); if (toastTab === "wish") { (window.TM_pane && window.TM_pane("c"), $("wishes")).scrollIntoView({ behavior: "smooth", block: "start" }); return; } if (toastTab) { openTab(toastTab); (window.TM_pane && window.TM_pane("d"), $("games")).scrollIntoView({ behavior: "smooth", block: "start" }); } });
 
   function tabVisible(tab) { return $("g-" + tab).classList.contains("on") && inView($("games")); }
   function onEv(o) {
@@ -1857,9 +1907,9 @@ var Net = (function () {
   var TABS = ["ban", "card", "chain", "love"];
   function openTab(t) { TABS.forEach(function (u) { $("tab-" + u).setAttribute("aria-selected", u === t); $("g-" + u).classList.toggle("on", u === t); }); }
   TABS.forEach(function (t) { $("tab-" + t).addEventListener("click", function () { openTab(t); }); });
-  $("jump-games").addEventListener("click", function () { $("games").scrollIntoView({ behavior: "smooth", block: "start" }); });
-  $("tb-go").addEventListener("click", function (e) { e.preventDefault(); $("games").scrollIntoView({ behavior: "smooth", block: "start" }); });
-  $("tb-net").addEventListener("click", function () { $("live").scrollIntoView({ behavior: "smooth", block: "center" }); });
+  $("jump-games").addEventListener("click", function () { (window.TM_pane && window.TM_pane("d"), $("games")).scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("tb-go").addEventListener("click", function (e) { e.preventDefault(); (window.TM_pane && window.TM_pane("d"), $("games")).scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("tb-net").addEventListener("click", function () { (window.TM_pane && window.TM_pane("d"), $("live")).scrollIntoView({ behavior: "smooth", block: "center" }); });
 
   /* ===== Trò 1: Từ cấm (dùng chung) ===== */
   var POOL = [["Uống", "Cấm nói từ “Uống”"], ["Tôi", "Cấm xưng “Tôi”"], ["Tên riêng", "Cấm gọi tên riêng của nhau"], ["Dô", "Cấm hô “Dô”"],
@@ -1928,7 +1978,7 @@ var Net = (function () {
   function ruleOf(c, who) {
     var w = esc(who || "Bạn");
     if (c.r === "A") return ["Lá Ách (Chưởng Môn)", w + " được chỉ định 1 người bất kỳ trong bàn uống!", true];
-    if ("JQK".indexOf(c.r) >= 0) return ["Lá hình " + c.r + " (" + CAP[c.r] + ")", w + " tự uống 1 ly!", false];
+    if ("JQK".indexOf(c.r) >= 0) return ["Lá hình " + c.r + " (" + CAP[c.r] + ")", w + " tự uống 1 ly!", false, true];
     if (c.s[1] === "cr") return ["Lá đỏ " + c.r + c.s[0], "người bên TRÁI của " + w + " uống!", false];
     return ["Lá đen " + c.r + c.s[0], "người bên PHẢI của " + w + " uống!", false];
   }
@@ -1955,7 +2005,8 @@ var Net = (function () {
         if (tok !== cTok) return;
         setBanner($("card-banner"), "drink", "<b>" + esc(o.by) + "</b> rút " + esc(rule[0]) + ": " + rule[1]);
         beep(rule[2] ? 880 : 420, .25, "triangle"); buzz(80); fx(card, rule[2] ? 56 : 28);
-        if (o.byc === CID) askWho($("who-card"), rule[2] ? "Bạn chỉ định ai? Ghi 1 ly cho:" : "Ghi 1 ly cho:");
+        if (o.byc === CID && !rule[3]) askWho($("who-card"), rule[2] ? "Bạn chỉ định ai? Ghi 1 ly cho:" : "Ghi 1 ly cho:");
+        else if (o.byc === CID) { var tt = document.createElement("span"); tt.className = "hint"; tt.textContent = "Đã tự ghi 1 ly cho " + o.by + " vào Bảng ly phạt."; $("who-card").appendChild(tt); }
       }, 330);
     }, wait);
   };
@@ -1965,17 +2016,17 @@ var Net = (function () {
     var c = deckOrder(st.seed)[st.n], rule = ruleOf(c, NAME);
     put("card", { seed: st.seed, n: st.n + 1, by: NAME, byc: CID });
     ev({ k: "card", by: NAME, title: rule[0], text: rule[1].replace(/<[^>]+>/g, "") });
+    if (rule[3]) { addDrink(NAME, 1); ev({ k: "drink", by: NAME, to: NAME, d: 1, auto: 1, why: rule[0] }); }
   }
   $("pcard").addEventListener("click", drawCard);
   $("draw").addEventListener("click", drawCard);
   $("reshuffle").addEventListener("click", function () { put("card", { seed: newSeed(), n: 0, by: NAME, byc: CID }); beep(300, .15, "square", .04); });
 
-  /* ===== Trò 3: Nối từ 3 giây (theo lượt, dùng chung) ===== */
-  var START = ["Bắt đầu", "Hạnh phúc", "Học sinh", "Bạn bè", "Quê hương", "Sinh nhật", "Tình yêu", "Mùa thu", "Nhà hàng", "Gia đình", "Thành công", "Cuộc sống"];
-  var TOPICS = ["Tên các loại bia", "Tên ca sĩ", "Món nhậu", "Tên quốc gia", "Tên tỉnh thành", "Tên diễn viên", "Tên bài hát", "Hãng xe", "Tên trái cây", "Tên con vật", "Tên đồ uống", "Tên bộ phim"];
-  var DUR = 3000, CIRC = 326.7, chT0 = 0, chRaf = 0, chFailSeq = -1, chCounted = -1;
-  function chain() { return S.chain || { mode: "chain", status: "idle", used: [], seq: 0, cur: null, topic: "", turn: null }; }
-  function lastSyl(w) { var p = norm(w).split(" "); return p[p.length - 1]; }
+  /* ===== Trò 3: Nối từ 3 giây (trang chỉ quay từ và tính lượt, cả bàn chơi miệng ngoài đời) ===== */
+  var START = ["Bắt đầu", "Hạnh phúc", "Học sinh", "Bạn bè", "Quê hương", "Sinh nhật", "Tình yêu", "Mùa thu", "Nhà hàng", "Gia đình", "Thành công", "Cuộc sống", "Cà phê", "Du lịch", "Ước mơ", "Thanh xuân", "Ngày mai", "Đồng nghiệp", "Bữa tiệc", "Trái tim"];
+  var TOPICS = ["Tên các loại bia", "Tên ca sĩ", "Món nhậu", "Tên quốc gia", "Tên tỉnh thành", "Tên diễn viên", "Tên bài hát", "Hãng xe", "Tên trái cây", "Tên con vật", "Tên đồ uống", "Tên bộ phim", "Thương hiệu thời trang", "Tên cầu thủ bóng đá", "Món ăn Hà Nội", "Tên bạn trong bàn tiệc"];
+  var DUR = 3000, CIRC = 326.7, chT0 = 0, chRaf = 0, chSpin = 0;
+  function chain() { return S.chain || { mode: "chain", status: "idle", seq: 0, cur: null, topic: "", turn: null, fail: null }; }
   function ringSet(left, run) {
     $("ring-p").setAttribute("stroke-dashoffset", (CIRC * (1 - left / DUR)).toFixed(1));
     $("ring-t").textContent = (left / 1000).toFixed(1);
@@ -1987,87 +2038,66 @@ var Net = (function () {
     var c = chain(), mine = chMine(), tl = $("chain-turn");
     $("m-chain").setAttribute("aria-pressed", c.mode !== "topic"); $("m-topic").setAttribute("aria-pressed", c.mode === "topic");
     tl.className = "turnline" + (mine ? " me" : "");
-    if (c.status === "run") tl.innerHTML = mine ? "Đến lượt bạn nối từ!" : "Đến lượt: <b>" + esc(c.turn.n) + "</b>";
-    else if (c.status === "over") tl.innerHTML = "<b>" + esc(c.fail ? c.fail.n : "") + "</b> phải uống!";
-    else tl.textContent = "Chưa bắt đầu. Ai cũng có thể bấm Bắt đầu.";
-    if (c.mode === "topic") {
-      $("cur").textContent = c.topic || "Sẵn sàng?";
-      $("chain-hint").textContent = c.topic ? "Lần lượt kể tên. Ai bí hoặc lặp lại thì uống." : "Bấm “Bắt đầu” để nhận chủ đề.";
-    } else if (c.cur) {
-      var parts = c.cur.split(" "), last = parts.pop();
-      $("cur").innerHTML = (parts.length ? esc(parts.join(" ")) + " " : "") + "<em>" + esc(last) + "</em>";
-      $("chain-hint").innerHTML = "Nối tiếp bằng tiếng “<b>" + esc(lastSyl(c.cur)) + "</b>”.";
-    } else if (c.status !== "idle") { $("cur").textContent = "Nối tiếp!"; $("chain-hint").textContent = "Lấy tiếng cuối của từ người trước để nối."; }
-    else { $("cur").textContent = "Sẵn sàng?"; $("chain-hint").textContent = "Bấm “Bắt đầu” để nhận từ đầu tiên."; }
-    $("word-in").disabled = !mine; $("word-ok").disabled = !mine;
-    var u = $("used"); u.innerHTML = "";
-    (c.used || []).slice(-12).forEach(function (w) { var s = document.createElement("span"); s.textContent = w; u.appendChild(s); });
+    if (c.status === "run") tl.innerHTML = mine ? "Đến lượt bạn nói!" : "Đến lượt: <b>" + esc(c.turn.n) + "</b>";
+    else if (c.status === "over") tl.innerHTML = "<b>" + esc(c.fail ? c.fail.n : "") + "</b> bị phạt 1 ly!";
+    else tl.textContent = "Chưa bắt đầu. Ai cũng có thể bấm Quay từ.";
+    if (!chSpin) $("cur").textContent = c.mode === "topic" ? (c.topic || "Sẵn sàng?") : (c.cur || "Sẵn sàng?");
+    if (c.mode === "topic") $("chain-hint").textContent = c.topic ? "Lần lượt kể tên theo chủ đề, mỗi lượt 3 giây. Bí, nói trùng hoặc quá giờ thì uống." : "Bấm “Quay từ” để nhận chủ đề ngẫu nhiên.";
+    else $("chain-hint").textContent = c.cur ? "Từ đầu tiên là trên đây. Người kế tiếp nói miệng một từ bắt đầu bằng tiếng cuối của từ trước, mỗi lượt 3 giây." : "Bấm “Quay từ” để nhận từ đầu tiên.";
     var box = $("chain-btns"); box.innerHTML = "";
-    if (c.status === "idle") box.appendChild(btn("Bắt đầu", "btn big", startChain));
-    if (mine) { box.appendChild(btn("Đã nối xong", "btn big", function () { passChain(null); })); box.appendChild(btn("Bí rồi", "btn big danger", function () { failChain("Bí rồi, không nối được!"); })); }
-    if (c.status === "run" && !mine) { var w = document.createElement("p"); w.className = "hint"; w.style.textAlign = "center"; w.textContent = "Đang chờ " + c.turn.n + " nối từ."; box.appendChild(w); }
-    if (c.status === "over") { box.appendChild(btn("Chơi tiếp", "btn big", continueChain)); box.appendChild(btn("Ván mới", "btn big ghost", resetChain)); }
-    [].forEach.call(box.querySelectorAll("button"), function (x) { x.classList.add("btn"); });
+    if (c.status === "idle") box.appendChild(btn("Quay từ & bắt đầu", "btn big", startChain));
+    if (c.status === "run") {
+      box.appendChild(btn("Xong, lượt kế", "btn big", passChain));
+      box.appendChild(btn("Bí hoặc quá 3 giây: ghi 1 ly", "btn big danger", function () { failChain(); }));
+      box.appendChild(btn("Quay từ mới", "btn big ghost", rerollChain));
+    }
+    if (c.status === "over") { box.appendChild(btn("Chơi tiếp (từ mới)", "btn big", continueChain)); box.appendChild(btn("Ván mới", "btn big ghost", resetChain)); }
     if (c.status !== "over") $("chain-banner").hidden = true;
     if (c.status === "idle") ringSet(DUR, false);
   }
   function chLoop() {
     cancelAnimationFrame(chRaf);
     var c = chain(); if (c.status !== "run") return;
-    var el = performance.now() - chT0, left = Math.max(0, DUR - el);
+    var left = Math.max(0, DUR - (performance.now() - chT0));
     ringSet(left, true);
-    var over = el - DUR;
-    if ((chMine() && over >= 0) || over >= 1800) { failChain("Quá 3 giây rồi!"); return; }
-    chRaf = requestAnimationFrame(chLoop);
+    if (left > 0) chRaf = requestAnimationFrame(chLoop);
+    else { $("ring-t").textContent = "Hết giờ"; beep(300, .25, "square", .04); }
   }
+  function wordOf(o) { return o.mode === "topic" ? o.topic : o.cur; }
   ST.chain = function (o, old, silent) {
     var changed = !old || old.seq !== o.seq || old.status !== o.status;
+    var newWord = !silent && o.status !== "idle" && (!old || wordOf(o) !== wordOf(old));
     if (o.status === "run" && changed) { chT0 = performance.now(); if (!silent && o.turn && o.turn.cid === CID && o.f !== CID) { beep(740, .12, "triangle"); buzz(70); } }
-    if (o.status === "over" && changed && !silent) {
-      setBanner($("chain-banner"), "drink", "<b>" + esc(o.fail ? o.fail.n : "") + "</b> phải uống! <small>" + esc(o.reason || "") + "</small>");
-      beep(180, .5, "sawtooth", .07); buzz([200, 80, 200]); fx($("ring"), 48);
-      if (o.fail && o.fail.cid === CID && chCounted !== o.seq) { chCounted = o.seq; addDrink(NAME, 1); }
-    } else if (o.status === "over") {
-      setBanner($("chain-banner"), "drink", "<b>" + esc(o.fail ? o.fail.n : "") + "</b> phải uống! <small>" + esc(o.reason || "") + "</small>");
+    if (o.status === "over") {
+      setBanner($("chain-banner"), "drink", "<b>" + esc(o.fail ? o.fail.n : "") + "</b> phải uống 1 ly! <small>Đã tự ghi vào Bảng ly phạt</small>");
+      if (changed && !silent) { beep(180, .5, "sawtooth", .07); buzz([200, 80, 200]); fx($("ring"), 48); }
+    }
+    if (newWord) {
+      var pool = o.mode === "topic" ? TOPICS : START, n = 0; chSpin = 1;
+      var iv = setInterval(function () { $("cur").textContent = pool[Math.floor(Math.random() * pool.length)]; if (++n > 9) { clearInterval(iv); chSpin = 0; renderChain(); fx($("cur"), 30); chime("h"); } }, 70);
     }
     renderChain(); chLoop();
-    if (o.status === "run" && changed && $("word-in") && !$("word-in").disabled) { try { $("word-in").focus({ preventScroll: true }); } catch (e) {} }
   };
+  function newWordPatch(mode) { return mode === "topic" ? { topic: TOPICS[Math.floor(Math.random() * TOPICS.length)], cur: null } : { cur: START[Math.floor(Math.random() * START.length)], topic: "" }; }
   function startChain() {
-    var c = chain(), mode = c.mode || "chain", o = { mode: mode, topic: "", cur: null, used: [], seq: (c.seq || 0) + 1, turn: nextAfter(CID), status: "run", by: NAME, fail: null, reason: "" };
-    if (mode === "chain") { o.cur = START[Math.floor(Math.random() * START.length)]; o.used = [norm(o.cur)]; } else o.topic = TOPICS[Math.floor(Math.random() * TOPICS.length)];
-    put("chain", o); ev({ k: "chain", by: NAME, mode: mode }); beep(600, .1, "triangle");
+    var c = chain(), mode = c.mode || "chain";
+    put("chain", ext(newWordPatch(mode), { mode: mode, seq: (c.seq || 0) + 1, turn: { cid: CID, n: NAME }, status: "run", by: NAME, fail: null }));
+    ev({ k: "chain", by: NAME, mode: mode }); beep(600, .1, "triangle");
   }
-  function continueChain() { var c = chain(); put("chain", ext(c, { seq: (c.seq || 0) + 1, status: "run", turn: nextAfter(c.fail ? c.fail.cid : CID), fail: null, reason: "" })); }
-  function resetChain() { var c = chain(); put("chain", { mode: c.mode, status: "idle", used: [], cur: null, topic: "", seq: (c.seq || 0) + 1, turn: null, fail: null, reason: "" }); }
-  function failChain(reason) {
-    var c = chain(); if (c.status !== "run" || chFailSeq === c.seq) return;
-    chFailSeq = c.seq;
-    put("chain", ext(c, { status: "over", fail: c.turn, reason: reason }));
-    ev({ k: "chainfail", by: NAME, n: c.turn.n, reason: reason, g: "chain" });
+  function rerollChain() { var c = chain(); put("chain", ext(c, ext(newWordPatch(c.mode), { seq: (c.seq || 0) + 1 }))); }
+  function continueChain() { var c = chain(); put("chain", ext(c, ext(newWordPatch(c.mode), { seq: (c.seq || 0) + 1, status: "run", turn: nextAfter(c.fail ? c.fail.cid : CID), fail: null }))); }
+  function resetChain() { var c = chain(); put("chain", { mode: c.mode, status: "idle", cur: null, topic: "", seq: (c.seq || 0) + 1, turn: null, fail: null }); }
+  function passChain() { var c = chain(); if (c.status !== "run") return; put("chain", ext(c, { seq: (c.seq || 0) + 1, turn: nextAfter(c.turn.cid), status: "run" })); beep(740, .08, "triangle"); }
+  function failChain() {
+    var c = chain(); if (c.status !== "run" || !c.turn) return;
+    put("chain", ext(c, { status: "over", fail: c.turn, seq: (c.seq || 0) + 1 }));
+    addDrink(c.turn.n, 1);
+    ev({ k: "chainfail", by: NAME, n: c.turn.n, reason: "bí hoặc quá 3 giây", g: "chain" });
   }
-  function passChain(word) {
-    var c = chain(); if (!chMine()) return;
-    var used = word ? (c.used || []).concat(word) : c.used || [], cur = word ? word : (c.mode === "chain" ? null : c.cur);
-    put("chain", ext(c, { cur: cur, used: used, seq: (c.seq || 0) + 1, turn: nextAfter(c.turn.cid), status: "run" }));
-    beep(740, .08, "triangle");
-  }
-  $("word-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var c = chain(); if (!chMine()) return;
-    var raw = $("word-in").value.trim(); if (!raw) return; $("word-in").value = "";
-    var w = norm(raw), parts = w.split(" ");
-    if ((c.used || []).indexOf(w) >= 0) return failChain("Từ “" + raw + "” đã được dùng rồi!");
-    if (c.mode === "chain") {
-      if (parts.length < 2) return failChain("Cần một từ ghép có ít nhất 2 tiếng.");
-      if (c.cur && parts[0] !== lastSyl(c.cur)) return failChain("Từ phải bắt đầu bằng tiếng “" + lastSyl(c.cur) + "”.");
-    }
-    passChain(w);
-  });
   function setChainMode(m) {
     var c = chain();
     if (c.status === "run") { $("chain-hint").textContent = "Đang chơi, hãy chờ hết ván rồi đổi chế độ."; return; }
-    put("chain", { mode: m, status: "idle", used: [], cur: null, topic: "", seq: (c.seq || 0) + 1, turn: null, fail: null, reason: "" });
+    put("chain", { mode: m, status: "idle", cur: null, topic: "", seq: (c.seq || 0) + 1, turn: null, fail: null });
   }
   $("m-chain").addEventListener("click", function () { setChainMode("chain"); });
   $("m-topic").addEventListener("click", function () { setChainMode("topic"); });
@@ -2108,7 +2138,7 @@ var Net = (function () {
   var GL = { c: { w: "Đạo Lữ Song Tu", d: "Cặp đôi & tình cảm", s: "Duyên" }, f: { w: "Nhân Duyên Giang Hồ", d: "Trai gái & kết nối", s: "Tình" }, h: { w: "Thử Luyện Tiếu Ngạo", d: "Thử thách hài hước", s: "Cười" }, r: { w: "Lệnh Bài Giang Hồ", d: "Tác động bàn nhậu", s: "Lệnh" }, p: { w: "Chưởng Môn Lệnh", d: "Quyền lực chủ tiệc", s: "Chủ" } };
   var GM = { couple: ["c"], flirt: ["f"], fun: ["h", "r", "p"], all: ["c", "f", "h", "r", "p"] };
   var UNITS = { soft: { u: "1/2 ly", s: "1 ngụm", h: "1/2 ngụm" }, full: { u: "1 ly đầy", s: "1/2 ly", h: "1/2 ly" } };
-  var lmode = "all", lfa = false, lclock = 0, lTok = 0, doneV = -1;
+  var lmode = "all", lfa = false, lclock = 0, lTok = 0, doneV = -1, loseV = -1;
   function drinkMode() { return (S.drink && S.drink.m) || "soft"; }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function fill(t, who) { var u = UNITS[drinkMode()]; return t.replace(/\{([Nnush])\}/g, function (m, k) { return k === "N" ? (who || "Bạn") : k === "n" ? (who || "bạn") : u[k]; }); }
@@ -2150,6 +2180,7 @@ var Net = (function () {
     var l = loveNow(); $("love-left").textContent = loveLeft();
     var gone = l.byc && l.byc !== CID && !online().some(function (p) { return p.cid === l.byc; });
     $("love-done").disabled = !((l.byc === CID || gone) && doneV !== l.v);
+    $("love-lose").disabled = !(l.byc === CID && loseV !== l.v && l.idx >= 0);
   }
   ST.turn = function (o, old, silent) {
     renderTurnLove();
@@ -2194,6 +2225,11 @@ var Net = (function () {
   }
   $("lcard").addEventListener("click", drawLove);
   $("love-draw").addEventListener("click", drawLove);
+  $("love-lose").addEventListener("click", function () {
+    var l = loveNow(); if (l.byc !== CID || l.idx < 0 || loseV === l.v) return;
+    loseV = l.v; addDrink(NAME, 1); ev({ k: "drink", by: NAME, to: NAME, d: 1, auto: 1, why: "thua thử thách «" + LOVE[l.idx].n + "»" });
+    setBanner($("love-banner"), "drink", "Đã tự ghi 1 ly cho <b>" + esc(NAME) + "</b> vào Bảng ly phạt."); beep(200, .3, "sawtooth", .06); buzz([120, 60, 120]); renderTurnLove();
+  });
   $("love-done").addEventListener("click", function () {
     var l = loveNow(); if (!l.byc) return;
     doneV = l.v; clockStop(); $("who-love").innerHTML = ""; $("love-timer").hidden = true;
@@ -2338,7 +2374,7 @@ var Net = (function () {
 
   /* ===== Cổng nhập tên ===== */
   var gate = $("gate"), gform = $("gate-form"), ginp = $("gate-name");
-  function setInert(v) { ["card", "topbar"].forEach(function (id) { var e = $(id); if (e) { try { e.inert = v; } catch (x) {} } }); }
+  function setInert(v) { ["stage", "topbar"].forEach(function (id) { var e = $(id); if (e) { try { e.inert = v; } catch (x) {} } }); }
   function openGate() {
     gate.classList.remove("gone", "opening"); document.body.classList.add("gated"); setInert(true);
     ginp.value = NAME || ""; $("gate-err").hidden = true; setTimeout(function () { try { ginp.focus({ preventScroll: true }); } catch (e) {} }, 60);
@@ -2495,5 +2531,110 @@ var Net = (function () {
       var now = performance.now(); if (now - lastT < 70) return; lastT = now; spark(e.clientX, e.clientY, 1, 22);
     }, { passive: true });
   }
+})();
+
+/* Bố cục theo thiết bị: chia thiệp thành các "trang" (Thiệp, Tiệc, Lời chúc, Trò chơi) */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var card = $("card"), body = card.querySelector(".body"), top = card.querySelector(".top"), bottom = card.querySelector(".bottom"), fine = card.querySelector(".fine");
+  var html = document.documentElement, mq = window.matchMedia("(min-width: 1000px)");
+  var tab = "a", wide = false, panes = { a: [], b: [], c: [], d: [] };
+
+  /* Phân loại các phần tử trong thân thiệp vào từng trang */
+  var kids = [].slice.call(body.children), cur = "a", marks = [];
+  kids.forEach(function (k) {
+    var m = null;
+    if (k.matches("section.panel") || k.matches("p.thanks")) m = "b";
+    else if (k.matches("section.wishes")) m = "c";
+    else if (k.matches(".deco-band") || k.matches("section.games")) m = "d";
+    marks.push(m);
+  });
+  kids.forEach(function (k, i) {
+    var p;
+    if (k.classList.contains("flourish")) { var j = i + 1; while (j < kids.length && !marks[j] && kids[j].classList.contains("flourish")) j++; p = marks[j] || cur; }
+    else { if (marks[i]) cur = marks[i]; p = cur; }
+    /* Đường kẻ dưới "Cảm ơn" và phần sau đó thuộc trang Tiệc */
+    panes[p].push(k);
+  });
+  var wrap = {};
+  ["a", "b", "c", "d"].forEach(function (p) {
+    var w = document.createElement("div"); w.className = "pane"; w.setAttribute("data-pane", p); wrap[p] = w;
+    panes[p].forEach(function (k) { w.appendChild(k); });
+    body.appendChild(w);
+  });
+  top.setAttribute("data-pane", "a"); bottom.setAttribute("data-pane", "b"); fine.setAttribute("data-pane", "b");
+
+  /* Dòng thông tin nhanh và nút sang trang Tiệc */
+  var count = wrap.a.querySelector("section.count");
+  var when = document.createElement("div"); when.className = "when";
+  when.innerHTML = '<span>🕢 19h30</span><span>📅 Thứ Sáu 16/10/2026</span><span>📍 Mỹ Đình, Hà Nội</span>';
+  var cta = document.createElement("button"); cta.type = "button"; cta.className = "btn big cta"; cta.innerHTML = "<span>Xem địa điểm &amp; liên hệ</span>";
+  cta.addEventListener("click", function () { setTab("b"); window.scrollTo({ top: 0, behavior: "smooth" }); });
+  if (count) { count.insertAdjacentElement("afterend", when); when.insertAdjacentElement("afterend", cta); } else { wrap.a.appendChild(when); wrap.a.appendChild(cta); }
+
+  /* Thẻ thứ hai (máy tính) và khung chứa */
+  var stage = document.createElement("div"); stage.className = "stage"; stage.id = "stage";
+  card.parentNode.insertBefore(stage, card); stage.appendChild(card);
+  var card2 = document.createElement("section"); card2.className = "card card2"; card2.id = "card2"; card2.setAttribute("aria-label", "Thông tin, lời chúc và trò chơi");
+  var body2 = document.createElement("div"); body2.className = "body"; card2.appendChild(body2); stage.appendChild(card2);
+
+  /* Thanh chọn trang */
+  var nav = document.createElement("nav"); nav.className = "tabs"; nav.id = "tabs"; nav.setAttribute("role", "tablist"); nav.setAttribute("aria-label", "Các phần của thiệp");
+  [["a", "✉️", "Thiệp"], ["b", "📍", "Tiệc"], ["c", "💌", "Lời chúc"], ["d", "🎲", "Trò chơi"]].forEach(function (t) {
+    var b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab"); b.setAttribute("data-t", t[0]); b.id = "nav-" + t[0];
+    b.innerHTML = "<i aria-hidden=\"true\">" + t[1] + "</i><span>" + t[2] + "</span><span class=\"dot2\" aria-hidden=\"true\"></span>";
+    b.addEventListener("click", function () { setTab(t[0]); window.scrollTo({ top: wide ? Math.max(0, card2.getBoundingClientRect().top + scrollY - 70) : 0, behavior: "smooth" }); });
+    nav.appendChild(b);
+  });
+  document.body.appendChild(nav);
+
+  function apply() {
+    var t = tab; if (wide && t === "a") t = "b";
+    [].forEach.call(document.querySelectorAll("[data-pane]"), function (e) {
+      var p = e.getAttribute("data-pane");
+      e.classList.toggle("pane-off", wide ? (p !== "a" && p !== t) : p !== t);
+    });
+    [].forEach.call(nav.querySelectorAll("button"), function (b) { b.setAttribute("aria-selected", b.getAttribute("data-t") === t); });
+    var dot = nav.querySelector("#nav-" + t + " .dot2"); if (dot) dot.classList.remove("on");
+    body.setAttribute("data-tab", t);
+    stick();
+  }
+  function setTab(t) { if (!wrap[t]) return; tab = t; var h = document.querySelector(".tp-hint"); if (h) h.classList.add("gone"); apply(); }
+  window.TM_pane = function (t) { if (t !== "a") setTab(t); else setTab("a"); };
+
+  function stick() {
+    if (!wide) { card.style.position = ""; card.style.top = ""; return; }
+    var h = card.offsetHeight, tp = Math.min(76, innerHeight - h - 14);
+    card.style.position = "sticky"; card.style.top = tp + "px";
+  }
+  function layout() {
+    wide = mq.matches; html.classList.toggle("wide", wide);
+    if (wide) {
+      ["b", "c", "d"].forEach(function (p) { body2.appendChild(wrap[p]); });
+      card2.insertBefore(nav, body2);
+      card2.appendChild(bottom); card2.appendChild(fine);
+    } else {
+      ["b", "c", "d"].forEach(function (p) { body.appendChild(wrap[p]); });
+      card.insertBefore(bottom, card.querySelector(".layer")); card.insertBefore(fine, card.querySelector(".layer"));
+      document.body.appendChild(nav);
+      /* thứ tự: phần trên, thân, phần dưới, chú thích */
+      card.insertBefore(top, card.firstChild);
+    }
+    apply();
+    setTimeout(function () { try { window.dispatchEvent(new Event("resize")); } catch (e) {} }, 60);
+  }
+  if (mq.addEventListener) mq.addEventListener("change", layout); else mq.addListener(layout);
+  addEventListener("resize", stick);
+  if (window.ResizeObserver) new ResizeObserver(stick).observe(card);
+  layout();
+
+  /* Chấm đỏ báo có lời chúc hoặc hoạt động mới ở trang khác */
+  var lastW = 0, wallInit = false;
+  var wall = $("wish-wall");
+  if (wall && window.MutationObserver) new MutationObserver(function () {
+    var n = wall.children.length;
+    if (n > lastW && (lastW > 0 || n === 1)) { var cur = wide && tab === "a" ? "b" : tab; if (cur !== "c") { var d = nav.querySelector("#nav-c .dot2"); if (d) d.classList.add("on"); } }
+    lastW = n;
+  }).observe(wall, { childList: true });
 })();
 </script>
