@@ -507,6 +507,138 @@ body.gated { overflow: hidden; }
   .avc { transition: transform .2s, box-shadow .2s; }
 }
 @media (prefers-reduced-motion: reduce) { .gate-bg::before, .turnline.me, .wait .dot { animation: none; } .toast-in, .feed li { animation: none; } .env-paper, .env-lines, .env-flap, .env-seal { transition: none; } }
+/* ===== Trang trí nâng cao ===== */
+:root { --shine: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%); }
+
+/* --- Cổng nhập tên --- */
+.gate-fx { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
+.gate-fx .st { position: absolute; width: var(--s); height: var(--s); border-radius: 50%; background: #f7e7b0; box-shadow: 0 0 8px 2px rgba(247, 221, 148, .7); animation: twk var(--t) ease-in-out var(--d) infinite; }
+.gate-fx .bl { position: absolute; bottom: -90px; left: var(--x); width: var(--w); height: calc(var(--w) * 1.25); border-radius: 50% 50% 48% 48%; background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .75) 0 8%, transparent 9%), var(--c); opacity: .85; animation: rise var(--t) linear var(--d) infinite; }
+.gate-fx .bl::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 46px; background: rgba(255, 255, 255, .45); }
+.gate-fx .pt { position: absolute; top: -20px; left: var(--x); width: 10px; height: 14px; border-radius: 80% 0 80% 0; background: var(--c); opacity: .85; animation: fall var(--t) linear var(--d) infinite; }
+.gate-fx .rays { position: absolute; left: 50%; top: 14%; width: 900px; height: 900px; margin: -450px 0 0 -450px; background: conic-gradient(from 0deg, rgba(247, 221, 148, .0), rgba(247, 221, 148, .16), rgba(247, 221, 148, 0) 10%, rgba(247, 221, 148, .12) 20%, rgba(247, 221, 148, 0) 30%, rgba(247, 221, 148, .15) 42%, rgba(247, 221, 148, 0) 55%, rgba(247, 221, 148, .12) 68%, rgba(247, 221, 148, 0) 80%, rgba(247, 221, 148, .16) 92%, rgba(247, 221, 148, 0)); border-radius: 50%; animation: spin 80s linear infinite; mask-image: radial-gradient(circle, #000 0, transparent 68%); -webkit-mask-image: radial-gradient(circle, #000 0, transparent 68%); }
+@keyframes twk { 0%, 100% { opacity: .15; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.25); } }
+@keyframes rise { from { transform: translateY(0) translateX(0) rotate(-4deg); } 50% { transform: translateY(-60vh) translateX(18px) rotate(4deg); } to { transform: translateY(-125vh) translateX(-10px) rotate(-3deg); } }
+@keyframes fall { from { transform: translateY(0) rotate(0); } to { transform: translateY(112vh) translateX(40px) rotate(560deg); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.gate-card { animation: gin .9s cubic-bezier(.2, .9, .3, 1.1) both; }
+@keyframes gin { from { opacity: 0; transform: translateY(26px) scale(.94); } to { opacity: 1; transform: none; } }
+.gate-card::after { content: ""; position: absolute; inset: -2px; border-radius: 12px; padding: 2px; background: conic-gradient(from var(--ang, 0deg), #e3c98a, #3d63a8, #fffbe8, #b8924a, #e3c98a); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; animation: ang 6s linear infinite; opacity: .9; }
+@property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes ang { to { --ang: 360deg; } }
+.env { animation: floaty 3.6s ease-in-out infinite; }
+@keyframes floaty { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-8px) rotate(1.5deg); } }
+.env-seal { animation: beat 1.6s ease-in-out infinite; transform-origin: 110px 92px; transform-box: view-box; }
+@keyframes beat { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.14); } 60% { transform: scale(.98); } }
+.opening .env-seal { animation: none; }
+.opening .env { animation: none; }
+.gate-ribbon { position: relative; margin: -6px 0 2px; }
+.gate-ribbon span { display: inline-block; padding: 5px 16px; font: 600 11px var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: #fff; background: linear-gradient(180deg, #3d63a8, #1a3374); border-radius: 3px; position: relative; box-shadow: 0 3px 8px rgba(20, 39, 90, .35); }
+.gate-ribbon span::before, .gate-ribbon span::after { content: ""; position: absolute; top: 5px; width: 14px; height: 100%; background: #14275a; z-index: -1; }
+.gate-ribbon span::before { left: -9px; clip-path: polygon(100% 0, 0 0, 35% 50%, 0 100%, 100% 100%); }
+.gate-ribbon span::after { right: -9px; clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%); }
+.gate-card h2 { background: linear-gradient(100deg, #14275a 30%, #b8924a 50%, #14275a 70%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: sheen 5s linear infinite; padding: 0 .1em; }
+@keyframes sheen { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+.gate-typed { min-height: 1.5em; margin: 0; font: italic 500 15px var(--f-head); color: var(--gold); }
+.gate-typed::after { content: "|"; margin-left: 2px; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.gate-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 4px 0 4px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; font: 600 12px var(--f-body); color: var(--navy); background: #f1e4c4; border: 1px solid #e3c98a; border-radius: 99px; }
+.chip i { font-style: normal; }
+.gate-hello { margin: 0; min-height: 1.4em; font: 600 14px var(--f-head); color: var(--blue); transition: color .25s; }
+.gate-hello.on { color: var(--navy); animation: pop .35s ease; }
+@keyframes pop { 50% { transform: scale(1.06); } }
+.gate-foot { margin: 6px 0 0; font: italic 400 12.5px var(--f-head); color: var(--ink-soft); }
+.gate-btn { position: relative; overflow: hidden; }
+.gate-btn::after, .btn.big::after { content: ""; position: absolute; inset: 0; background: var(--shine); transform: translateX(-120%); animation: sweep 3.2s ease-in-out infinite; pointer-events: none; }
+@keyframes sweep { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.btn.big { position: relative; overflow: hidden; }
+.gate-welcome { position: fixed; inset: 0; z-index: 31; display: grid; place-items: center; pointer-events: none; opacity: 0; }
+.gate-welcome div { text-align: center; color: #fff; font: 700 clamp(34px, 11vw, 54px)/1.25 var(--f-script); text-shadow: 0 4px 24px rgba(0, 0, 0, .5), 0 0 30px rgba(247, 221, 148, .8); padding: 0 20px; }
+.gate-welcome small { display: block; font: 600 12px var(--f-body); letter-spacing: .25em; text-transform: uppercase; color: #f7e7b0; margin-bottom: 4px; }
+.gate-welcome.show { animation: wel 1.5s ease forwards; }
+@keyframes wel { 0% { opacity: 0; transform: scale(.7); } 25% { opacity: 1; transform: scale(1.05); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(1.15); } }
+.opening .gate-card { transition: transform .8s ease, opacity .5s ease .3s; transform: translateY(-40px) scale(.9); opacity: 0; }
+
+/* --- Toàn trang --- */
+.ambient { position: fixed; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+.ambient .ab { position: absolute; bottom: -100px; left: var(--x); width: var(--w); height: calc(var(--w) * 1.25); border-radius: 50% 50% 48% 48%; background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .8) 0 8%, transparent 9%), var(--c); opacity: .5; animation: rise var(--t) linear var(--d) infinite; }
+.ambient .ab::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 40px; background: rgba(20, 39, 90, .3); }
+.ambient .ap { position: absolute; top: -20px; left: var(--x); width: 9px; height: 12px; border-radius: 80% 0 80% 0; background: var(--c); opacity: .6; animation: fall var(--t) linear var(--d) infinite; }
+.progress { position: fixed; left: 0; top: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, #b8924a, #f7e7b0, #3d63a8); z-index: 9; pointer-events: none; }
+.rv { opacity: 0; transform: translateY(26px) scale(.98); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .3, 1); }
+.rv.in { opacity: 1; transform: none; }
+.rv-l { transform: translateX(-30px); } .rv-r { transform: translateX(30px); }
+.flourish { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 2px 0; color: var(--gold); pointer-events: none; }
+.flourish::before, .flourish::after { content: ""; flex: 1; max-width: 90px; height: 1px; background: linear-gradient(90deg, transparent, #c9a762); }
+.flourish::after { transform: scaleX(-1); }
+.flourish svg { width: 22px; height: 22px; animation: spinslow 9s linear infinite; }
+@keyframes spinslow { to { transform: rotate(360deg); } }
+.count h2, .games h2 { background: linear-gradient(100deg, var(--ink-soft) 35%, #b8924a 50%, var(--ink-soft) 65%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: sheen 6s linear infinite; }
+.cell { transition: transform .25s, box-shadow .25s; }
+.cell:hover { transform: translateY(-4px) rotate(-1.5deg); box-shadow: 0 10px 20px rgba(20, 39, 90, .18); }
+.cell b.tick { animation: tick .35s ease; }
+@keyframes tick { 40% { transform: translateY(-3px) scale(1.12); } }
+.panel .row { transition: transform .25s; }
+.panel .row:hover { transform: translateX(4px); }
+.panel .ico { animation: bob 4s ease-in-out infinite; }
+.panel .row:nth-child(2) .ico { animation-delay: -1.2s; } .panel .row:nth-child(3) .ico { animation-delay: -2.4s; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.title-script { text-shadow: 0 0 0 rgba(184, 146, 74, 0); animation: glow 4.5s ease-in-out infinite; }
+@keyframes glow { 50% { text-shadow: 0 0 22px rgba(217, 189, 126, .85); } }
+.crown { animation: bob 3s ease-in-out infinite; }
+.thanks { position: relative; }
+.thanks.in { animation: glow 4s ease-in-out infinite; }
+.spark { position: fixed; z-index: 9; pointer-events: none; font-size: 14px; color: #d9bd7e; text-shadow: 0 0 6px rgba(247, 221, 148, .9); animation: sp .8s ease-out forwards; }
+@keyframes sp { from { opacity: 1; transform: translate(0, 0) scale(1) rotate(0); } to { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.3) rotate(180deg); } }
+.tp-hint { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 6; font: 600 12px var(--f-body); color: #fff; background: rgba(20, 39, 90, .85); padding: 7px 14px; border-radius: 99px; animation: bob 1.6s ease-in-out infinite; pointer-events: none; transition: opacity .5s; }
+.tp-hint.gone { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .gate-fx, .ambient, .gate-card::after, .gate-btn::after, .btn.big::after, .flourish svg, .env, .env-seal, .title-script, .crown, .panel .ico, .rv, .gate-card h2, .count h2, .games h2 { animation: none !important; }
+  .rv { opacity: 1; transform: none; transition: none; }
+  .gate-card h2, .count h2, .games h2 { color: inherit; background: none; }
+}
+.env { width: min(150px, 38vw); margin: -50px auto 0; }
+.gate-card { padding-top: 20px; gap: 4px; }
+.gate-sub { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+.gate-foot { font-size: 12px; }
+.opening .gate-card { transition: transform .5s ease, opacity .3s ease; }
+.gate-welcome.show { animation-delay: .3s; }
+@media (max-height: 760px) { .gate-foot, .gate-typed { display: none; } .env { width: 110px; } }
+
+/* --- Sổ lời chúc --- */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.wishes { width: 100%; display: flex; flex-direction: column; gap: 12px; padding: 6px 0; }
+.wishes h2 { margin: 0; text-align: center; font: 700 28px/1.3 var(--f-script); color: var(--navy); }
+.wishes-sub { margin: 0; text-align: center; }
+.wish-form { display: flex; flex-direction: column; gap: 8px; background: #fff9ea; border: 1.5px solid #e3c98a; border-radius: 16px; padding: 14px; box-shadow: 0 0 0 4px rgba(227, 201, 138, .2); }
+.wish-form textarea { width: 100%; resize: none; font: 500 15px/1.55 var(--f-head); }
+.wish-row { display: flex; justify-content: space-between; font: 500 12.5px var(--f-body); color: var(--ink-soft); }
+.wish-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.wish-chips button { font: 500 12px var(--f-body); padding: 5px 10px; border-radius: 99px; border: 1px solid #c9a762; background: #fff; color: var(--navy); cursor: pointer; }
+.wish-chips button:hover { background: #f1e4c4; }
+.wish-err { margin: 0; font: 500 13px var(--f-body); color: #b23a24; }
+.wish-h { font: 600 13px var(--f-body); color: var(--ink-soft); border-top: 1px dashed #d9c892; padding-top: 8px; }
+.wish-wall { display: flex; flex-direction: column; gap: 10px; max-height: 520px; overflow-y: auto; overscroll-behavior: contain; padding: 4px 2px 8px; }
+.wc { position: relative; background: #fffdf6; border: 1px solid #e3c98a; border-radius: 14px; padding: 12px 14px 10px 14px; box-shadow: 0 4px 12px rgba(20, 39, 90, .08); animation: wpop .6s cubic-bezier(.2, 1.2, .4, 1) both; }
+.wc::before { content: "“"; position: absolute; right: 12px; top: -4px; font: 700 54px/1 var(--f-script); color: #e3c98a; opacity: .7; }
+.wc p { margin: 8px 0 4px; font: 500 15px/1.55 var(--f-head); color: var(--navy); overflow-wrap: anywhere; }
+.wc-h { display: flex; align-items: center; gap: 8px; font: 600 13px var(--f-body); color: var(--navy); }
+.wc-h time { margin-left: auto; font-weight: 400; color: var(--ink-soft); font-size: 12px; margin-right: 22px; }
+.wc-x { position: absolute; right: 8px; bottom: 6px; font: 500 12px var(--f-body); color: #b23a24; background: none; border: 0; cursor: pointer; padding: 4px 6px; }
+.wc.mine { border-color: #3d63a8; }
+.wc.new { animation: wpop .7s cubic-bezier(.2, 1.2, .4, 1) both, wglow 2.4s ease 1; }
+@keyframes wpop { from { opacity: 0; transform: translateY(18px) scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes wglow { 0%, 60% { box-shadow: 0 0 0 4px rgba(227, 201, 138, .8), 0 0 26px rgba(247, 221, 148, .9); } 100% { box-shadow: 0 4px 12px rgba(20, 39, 90, .08); } }
+.wish-spot { position: relative; text-align: center; padding: 18px 16px; border-radius: 16px; background: linear-gradient(160deg, #1a3374, #2f55a6); color: #fff; box-shadow: 0 10px 26px rgba(20, 39, 90, .3); overflow: hidden; }
+.wish-spot::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20% 0, rgba(247, 221, 148, .35), transparent 55%); }
+.wish-spot small { position: relative; display: block; font: 600 11px var(--f-body); letter-spacing: .2em; text-transform: uppercase; color: #f7e7b0; }
+.wish-spot p { position: relative; margin: 8px 0 6px; font: 500 italic 17px/1.55 var(--f-head); overflow-wrap: anywhere; animation: wpop .7s ease both; }
+.wish-spot b { position: relative; font: 700 22px var(--f-script); color: #f7dd94; }
+
+.wish-chips { flex-direction: column; }
+.wish-chips button { text-align: left; border-radius: 12px; padding: 8px 12px; font: 500 13.5px/1.45 var(--f-head); }
+.wish-chips-h { margin: 0; font: 400 12.5px/1.45 var(--f-body); color: var(--ink-soft); }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -544,6 +676,7 @@ body.gated { overflow: hidden; }
 </svg>
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
   <div class="gate-bg" aria-hidden="true"></div>
+  <div class="gate-fx" id="gate-fx" aria-hidden="true"></div>
   <form class="gate-card" id="gate-form" autocomplete="off">
     <div class="env" id="env" aria-hidden="true">
       <svg viewBox="0 0 220 150">
@@ -559,13 +692,22 @@ body.gated { overflow: hidden; }
         <g class="env-seal"><circle cx="110" cy="92" r="17" fill="#b8924a"/><circle cx="110" cy="92" r="13" fill="#d9bd7e"/><path d="M110 82 C 104 78, 98 84, 104 90 C 106 93, 110 97, 110 97 C 110 97, 114 93, 116 90 C 122 84, 116 78, 110 82Z" fill="#8a6428"/></g>
       </svg>
     </div>
+    <div class="gate-ribbon" aria-hidden="true"><span>✦ Bạn có một lời mời đặc biệt ✦</span></div>
     <p class="gate-kick">Thiệp mời sinh nhật</p>
     <h2 id="gate-title">Hoàng Tiến Minh</h2>
-    <p class="gate-sub">Hãy cho mình biết bạn là ai nhé. Tên của bạn sẽ hiện khi bạn chơi trò chơi để mọi người cùng thấy.</p>
+    <p class="gate-typed" id="gate-typed" aria-live="polite"></p>
+    <div class="gate-chips" aria-label="Thông tin buổi tiệc">
+      <span class="chip"><i aria-hidden="true">🕢</i>19h30</span>
+      <span class="chip"><i aria-hidden="true">📅</i>Thứ Sáu 16/10</span>
+      <span class="chip"><i aria-hidden="true">📍</i>Mỹ Đình</span>
+    </div>
+    <p class="gate-sub">Trước khi vào tiệc, hãy cho mình biết bạn là ai nhé. Tên của bạn sẽ hiện mỗi khi bạn rút bài hay chơi trò chơi, để cả bàn cùng thấy và cùng cười.</p>
     <label class="gate-lbl" for="gate-name">Tên của bạn</label>
     <input class="gate-inp" id="gate-name" type="text" maxlength="20" placeholder="Ví dụ: Lan Anh" autocomplete="given-name" enterkeyhint="go" required>
     <p class="gate-err" id="gate-err" role="alert" hidden>Bạn nhập tên giúp mình nhé.</p>
-    <button class="btn gate-btn" type="submit" id="gate-go">Mở thiệp</button>
+    <p class="gate-hello" id="gate-hello" aria-live="polite">Gõ tên của bạn để nhận lời chào nhé</p>
+    <button class="btn gate-btn" type="submit" id="gate-go"><span>Mở thiệp &amp; vào tiệc</span></button>
+    <p class="gate-foot">Mỗi cái tên một tiếng cười. Tối nay không say không về!</p>
   </form>
 </div>
 <header class="topbar" id="topbar" hidden>
@@ -741,6 +883,25 @@ body.gated { overflow: hidden; }
       </div>
     </section>
 
+    <section class="wishes" id="wishes" aria-labelledby="wishes-title">
+      <h2 id="wishes-title">Sổ lời chúc sinh nhật</h2>
+      <p class="hint wishes-sub">Gửi một lời chúc cho Minh. Lời chúc hiện ngay trên điện thoại của tất cả mọi người và được lưu lại suốt buổi tiệc.</p>
+      <div class="wish-spot" id="wish-spot" aria-live="polite" hidden></div>
+      <form class="wish-form" id="wish-form" autocomplete="off">
+        <label class="sr" for="wish-text">Lời chúc của bạn</label>
+        <textarea class="inp" id="wish-text" maxlength="160" rows="3" placeholder="Ví dụ: Chúc Minh tuổi mới thật nhiều sức khỏe, thật nhiều niềm vui và luôn bình an nhé!"></textarea>
+        <div class="wish-row">
+          <span class="wish-from">Gửi từ: <b id="wish-me">bạn</b></span>
+          <span class="wish-count" id="wish-count">0/160</span>
+        </div>
+        <p class="wish-chips-h">Chưa biết viết gì? Chạm vào một lời chúc có sẵn để chép vào khung, rồi sửa lại theo ý bạn:</p>
+        <div class="wish-chips" id="wish-chips" aria-label="Lời chúc có sẵn"></div>
+        <button class="btn big" type="submit" id="wish-send"><span>Gửi lời chúc</span></button>
+        <p class="wish-err" id="wish-err" role="alert" hidden></p>
+      </form>
+      <div class="wish-h"><b id="wish-n">Chưa có lời chúc nào</b></div>
+      <div class="wish-wall" id="wish-wall"></div>
+    </section>
     <div class="deco-band" aria-hidden="true">
       <svg class="art" viewBox="0 0 420 150" preserveAspectRatio="xMidYMax meet">
         <path d="M-10 142 C 80 112, 150 152, 230 130 S 380 122, 430 142" fill="none" stroke="#3d63a8" stroke-width="16" stroke-linecap="round"/>
@@ -1508,7 +1669,8 @@ var Net = (function () {
     var c = S[k];
     if (c && !(o.v > c.v || (o.v === c.v && String(o.f) >= String(c.f)))) return;
     S[k] = o; saveSnap();
-    if (ST[k]) ST[k](o, c, !(o.f === CID || live));
+    var h = ST[k] || ST[k.slice(0, 2)];
+    if (h) h(o, c, !(o.f === CID || live), k);
   }
   /* Bản sao lưu trên máy: nếu máy chủ trực tuyến bị mất dữ liệu, máy nào còn bản sao sẽ khôi phục lại cho cả phòng */
   var snapT = 0;
@@ -1517,10 +1679,10 @@ var Net = (function () {
     var snap = null; try { snap = JSON.parse(store("tm_snap") || "null"); } catch (e) {}
     if (!snap) return;
     for (var k in snap) {
-      var sv = snap[k]; if (!sv || typeof sv.v !== "number" || !S.hasOwnProperty(k)) continue;
+      var sv = snap[k]; if (!sv || typeof sv.v !== "number" || (!S.hasOwnProperty(k) && !/^[we]-/.test(k))) continue;
       if (S[k] && S[k].v >= sv.v) continue;
       var o = copy(sv); delete o.i; delete o.f; delete o.ts;
-      if (!S[k]) S[k] = { v: sv.v, f: "" }; else S[k] = { v: Math.max(S[k].v, sv.v), f: S[k].f };
+      if (!S[k]) { S[k] = { v: sv.v, f: "" }; if (/^e-/.test(k)) o.v = sv.v; } else S[k] = { v: Math.max(S[k].v, sv.v), f: S[k].f };
       put(k, o);
     }
   }
@@ -1553,7 +1715,21 @@ var Net = (function () {
     m[k].c = Math.max(0, m[k].c + d);
     put("drinks", { m: m });
   }
-  function ev(o) { return Net.pub("ev", o, false); }
+  /* Mọi thao tác chơi đều được lưu lại (tối đa 150 mục mới nhất) để khách vào sau vẫn xem được nhật ký */
+  function ev(o) {
+    var m = Net.pub("ev", o, false);
+    if (o.k !== "join") Net.pub("st/e-" + (hash(m.i) % 150), ext(o, { eid: m.i, v: m.ts, at: m.ts }), true);
+    return m;
+  }
+  var seenEv = {};
+  function addFeed(o) {
+    var id = o.eid || o.i; if (id && seenEv[id]) return false; if (id) seenEv[id] = 1;
+    FEED.push(o.at ? ext(o, { ts: o.at }) : o);
+    FEED.sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+    if (FEED.length > 150) FEED.length = 150;
+    renderFeed(); return true;
+  }
+  ST["e-"] = function (o) { addFeed(o); };
 
   /* ===== Hàng chọn "ai uống" ===== */
   function askWho(box, label) {
@@ -1590,7 +1766,7 @@ var Net = (function () {
   function renderFeed() {
     var ol = $("feed"); ol.innerHTML = "";
     if (!FEED.length) { var li = document.createElement("li"); li.className = "feed-empty"; li.textContent = "Chưa có hoạt động nào. Hãy là người đầu tiên rút bài!"; ol.appendChild(li); return; }
-    FEED.slice(0, 40).forEach(function (o) {
+    FEED.slice(0, 100).forEach(function (o) {
       var li = document.createElement("li"), inf = KINFO[o.k] || ["•", ""];
       li.className = "k-" + inf[1];
       li.innerHTML = '<span class="fi" aria-hidden="true">' + inf[0] + "</span><span>" + evText(o) + "</span><time>" + hhmm(o.ts) + "</time>";
@@ -1606,12 +1782,12 @@ var Net = (function () {
     clearTimeout(toastT); toastT = setTimeout(hideToast, 7500);
   }
   $("toast-x").addEventListener("click", hideToast);
-  $("toast-go").addEventListener("click", function () { hideToast(); if (toastTab) { openTab(toastTab); $("games").scrollIntoView({ behavior: "smooth", block: "start" }); } });
+  $("toast-go").addEventListener("click", function () { hideToast(); if (toastTab === "wish") { $("wishes").scrollIntoView({ behavior: "smooth", block: "start" }); return; } if (toastTab) { openTab(toastTab); $("games").scrollIntoView({ behavior: "smooth", block: "start" }); } });
 
   function tabVisible(tab) { return $("g-" + tab).classList.contains("on") && inView($("games")); }
   function onEv(o) {
     if (!o || !o.k) return;
-    FEED.unshift(o); if (FEED.length > 60) FEED.pop(); renderFeed();
+    addFeed(o);
     if (!live) return;
     var mine = o.f === CID;
     if (o.k === "slip") {
@@ -2073,6 +2249,58 @@ var Net = (function () {
     ev({ k: "reset", by: NAME });
   });
 
+  /* ===== Sổ lời chúc (mỗi lời chúc là một mục riêng, gửi là mọi người thấy ngay) ===== */
+  var WCHIPS = [
+    "Sinh nhật Minh rồi, mừng tuổi mới lên level, nhận buff sức khỏe, buff may mắn, buff tiền về đầy túi nha!",
+    "Chúc Minh tuổi mới vibe tích cực, deadline tránh xa, lương tăng nhanh, crush rep tin trong 1 nốt nhạc!",
+    "Chúc mừng sinh nhật ông chủ bàn Uy Tín! Mong tuổi mới đỉnh của chóp, chill mỗi ngày, bạn bè luôn quây quần như tối nay!",
+    "Tuổi mới chỉ có lên hương: sự nghiệp thăng hạng, tình duyên có người, ví luôn đầy. Cạn ly nào Minh ơi!",
+    "Happy birthday Minh! Chúc cậu già đi nhưng không thể bớt đẹp trai, vui hết nấc, mai không đau đầu nhé!"
+  ];
+  var wcBox = $("wish-chips");
+  WCHIPS.forEach(function (t, i) { wcBox.appendChild(btn(t, "", function () { $("wish-text").value = t; $("wish-text").dispatchEvent(new Event("input")); $("wish-text").focus(); })); });
+  $("wish-text").addEventListener("input", function () { $("wish-count").textContent = this.value.length + "/160"; });
+  function wishList() {
+    var a = []; for (var k in S) if (k.indexOf("w-") === 0 && S[k] && !S[k].del) a.push({ k: k, o: S[k] });
+    a.sort(function (x, y) { return (y.o.at || y.o.ts || 0) - (x.o.at || x.o.ts || 0); }); return a;
+  }
+  var spotI = 0, spotT = 0;
+  function showSpot(list) {
+    var box = $("wish-spot");
+    if (!list.length) { box.hidden = true; return; }
+    var w = list[spotI % list.length].o; box.hidden = false;
+    box.innerHTML = "<small>Lời chúc gửi Minh</small><p>" + esc(w.t) + "</p><b>" + esc(w.n) + "</b>";
+  }
+  function renderWishes(newKey) {
+    var list = wishList(), wall = $("wish-wall"); wall.innerHTML = "";
+    $("wish-n").textContent = list.length ? list.length + " lời chúc đã gửi" : "Chưa có lời chúc nào. Hãy là người đầu tiên!";
+    list.forEach(function (x) {
+      var w = x.o, d = document.createElement("article"); d.className = "wc" + (w.c === CID ? " mine" : "") + (x.k === newKey ? " new" : "");
+      d.innerHTML = '<div class="wc-h">' + avHTML(w.n) + "<span>" + esc(w.n) + "</span><time>" + hhmm(w.at || w.ts) + "</time></div><p>" + esc(w.t) + "</p>";
+      if (w.c === CID) d.appendChild(btn("Xóa", "wc-x", function () { put(x.k, ext(w, { del: true })); }));
+      wall.appendChild(d);
+    });
+    spotI = 0; showSpot(list);
+    clearInterval(spotT); if (list.length > 1) spotT = setInterval(function () { spotI++; showSpot(wishList()); }, 6000);
+  }
+  ST["w-"] = function (o, old, silent, k) {
+    renderWishes(!old && !silent ? k : null);
+    if (!silent && !old && !o.del && o.c !== CID) { toast(o.n + " vừa gửi lời chúc", o.t.length > 90 ? o.t.slice(0, 90) + "…" : o.t, o.n, false, "wish"); chime("p"); if (window.FX) window.FX.burst(innerWidth / 2, innerHeight * .45, 40, 6.28); }
+  };
+  var lastWish = 0;
+  $("wish-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var t = $("wish-text").value.replace(/\s+/g, " ").replace(/[<>]/g, "").trim().slice(0, 160), er = $("wish-err"); er.hidden = true;
+    if (!t) { er.textContent = "Bạn viết vài chữ rồi hãy gửi nhé."; er.hidden = false; return; }
+    if (Date.now() - lastWish < 4000) { er.textContent = "Bạn gửi hơi nhanh, chờ vài giây nhé."; er.hidden = false; return; }
+    if (wishList().filter(function (x) { return x.o.c === CID; }).length >= 5) { er.textContent = "Mỗi khách gửi tối đa 5 lời chúc, bạn xóa bớt một lời nếu muốn gửi thêm."; er.hidden = false; return; }
+    lastWish = Date.now();
+    put("w-" + CID.slice(0, 4) + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), { n: NAME, c: CID, t: t, at: Date.now() });
+    $("wish-text").value = ""; $("wish-count").textContent = "0/160";
+    fx($("wish-send"), 60); chime("p"); buzz(60);
+  });
+  $("wish-me").textContent = "bạn";
+
   /* ===== Mạng ===== */
   function announce() { if (NAME) Net.pub("pr/" + CID, { n: NAME, j: JOINED }, true); }
   function onMsg(sub, o) {
@@ -2092,7 +2320,7 @@ var Net = (function () {
     var base = NAME0 || NAME, n = 2; while (online().some(function (p) { return key(p.n) === key(base + " " + n); })) n++;
     setName(base + " " + n); toast("Đã có người tên “" + base + "”", "Mình đổi tên bạn thành “" + NAME + "” để không bị nhầm.", NAME, false, null);
   }
-  function setName(n) { NAME = n; store("tm_name", n); $("tb-name").textContent = n; $("tb-av").outerHTML = avHTML(n).replace('class="av"', 'class="av" id="tb-av"'); announce(); renderLive(); }
+  function setName(n) { NAME = n; $("wish-me").textContent = n; store("tm_name", n); $("tb-name").textContent = n; $("tb-av").outerHTML = avHTML(n).replace('class="av"', 'class="av" id="tb-av"'); announce(); renderLive(); }
   function startNet() {
     if (started) return; started = true; t0net = Date.now();
     Net.start({
@@ -2125,7 +2353,7 @@ var Net = (function () {
     gate.classList.add("opening");
     setTimeout(function () {
       gate.classList.add("gone"); document.body.classList.remove("gated"); setInert(false);
-      $("topbar").hidden = false; $("tb-name").textContent = NAME; $("tb-av").outerHTML = avHTML(NAME).replace('class="av"', 'class="av" id="tb-av"');
+      $("topbar").hidden = false; $("wish-me").textContent = NAME; $("tb-name").textContent = NAME; $("tb-av").outerHTML = avHTML(NAME).replace('class="av"', 'class="av" id="tb-av"');
       if (started) { if (renamed) { announce(); renderLive(); } } else startNet();
       if (window.FX) window.FX.burst(innerWidth / 2, innerHeight * .55, 60, 6.28);
       beep(660, .12, "triangle"); setTimeout(function () { beep(880, .16, "triangle"); }, 120);
@@ -2140,5 +2368,132 @@ var Net = (function () {
   renderChain(); renderLive(); renderFeed(); ST.drink({ m: "soft" });
   $("love-left").textContent = loveLeft();
   window.__tm = { S: S, P: P, online: online, cid: CID };
+})();
+
+/* Trang trí nâng cao: cổng nhập tên, hiệu ứng nền, hiện dần khi cuộn, tia sáng khi chạm */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var BC = ["#e8826b", "#f2b8c0", "#6d8fc7", "#d9bd7e", "#fffdf6", "#9db4da"];
+  function r(a, b) { return a + Math.random() * (b - a); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function el(cls, host, css) { var d = document.createElement("div"); d.className = cls; d.style.cssText = css || ""; host.appendChild(d); return d; }
+
+  /* --- Nền cổng: sao, bóng bay, cánh hoa --- */
+  var gf = $("gate-fx");
+  if (gf && !reduce) {
+    el("rays", gf);
+    var i;
+    for (i = 0; i < 38; i++) el("st", gf, "left:" + r(0, 100) + "%;top:" + r(0, 100) + "%;--s:" + r(2, 5) + "px;--t:" + r(2, 5) + "s;--d:-" + r(0, 5) + "s");
+    for (i = 0; i < 9; i++) el("bl", gf, "--x:" + r(2, 92) + "%;--w:" + r(30, 54) + "px;--c:" + pick(BC) + ";--t:" + r(11, 20) + "s;--d:-" + r(0, 18) + "s");
+    for (i = 0; i < 16; i++) el("pt", gf, "--x:" + r(0, 100) + "%;--c:" + pick(["#f2b8c0", "#f7e7b0", "#e8826b", "#fffdf6"]) + ";--t:" + r(8, 15) + "s;--d:-" + r(0, 14) + "s");
+  }
+
+  /* --- Chữ gõ tự động --- */
+  var typed = $("gate-typed");
+  var LINES = ["Một buổi tiệc ấm áp đang chờ bạn…", "Có bạn bè, có tiếng cười, có cả những ly nâng cao…", "Có trò chơi vui và lời chúc thật lòng…", "Bạn đã sẵn sàng vào tiệc chưa?"];
+  var li = 0, ci = 0, del = false, ty = 0;
+  function type() {
+    if (!typed || !typed.isConnected || $("gate").classList.contains("gone")) return;
+    var s = LINES[li];
+    if (reduce) { typed.textContent = s; ty = setTimeout(function () { li = (li + 1) % LINES.length; type(); }, 3200); return; }
+    if (!del) { ci++; typed.textContent = s.slice(0, ci); if (ci >= s.length) { del = true; ty = setTimeout(type, 1900); return; } ty = setTimeout(type, 55); }
+    else { ci -= 2; if (ci <= 0) { ci = 0; del = false; li = (li + 1) % LINES.length; typed.textContent = ""; ty = setTimeout(type, 350); return; } typed.textContent = s.slice(0, ci); ty = setTimeout(type, 22); }
+  }
+  type();
+
+  /* --- Lời chào theo tên đang gõ --- */
+  var inp = $("gate-name"), hello = $("gate-hello");
+  function greet() {
+    var v = inp.value.replace(/\s+/g, " ").trim();
+    if (!v) { hello.className = "gate-hello"; hello.textContent = "Gõ tên của bạn để nhận lời chào nhé"; return; }
+    hello.className = "gate-hello on"; hello.textContent = "Xin chào " + v + "! Chúc bạn một buổi tiệc thật vui";
+  }
+  inp.addEventListener("input", greet); greet(); setTimeout(greet, 100);
+
+  /* --- Lời chào lớn và pháo hoa khi mở thiệp --- */
+  var form = $("gate-form");
+  function fireworks(n) {
+    if (!window.FX || reduce) return;
+    for (var k = 0; k < n; k++) (function (k) {
+      setTimeout(function () { window.FX.burst(r(.15, .85) * innerWidth, r(.18, .55) * innerHeight, 50, 6.28); }, k * 260);
+    })(k);
+  }
+  form.addEventListener("submit", function () {
+    var v = inp.value.replace(/\s+/g, " ").trim(); if (!v) return;
+    var w = document.querySelector(".gate-welcome") || el("gate-welcome", document.body);
+    w.innerHTML = "<div><small>Chào mừng đến tiệc sinh nhật</small></div>";
+    var t = document.createElement("span"); t.textContent = v; w.firstChild.appendChild(t);
+    var s = document.createElement("small"); s.style.marginTop = "6px"; s.textContent = "Chúc bạn vui hết mình"; w.firstChild.appendChild(s);
+    w.classList.remove("show"); void w.offsetWidth; w.classList.add("show");
+    setTimeout(function () { fireworks(6); showHint(); }, 900);
+  });
+
+  /* --- Nền toàn trang: bóng bay và cánh hoa bay nhẹ ở hai bên --- */
+  if (!reduce) {
+    var am = el("ambient", document.body); am.setAttribute("aria-hidden", "true");
+    for (var b = 0; b < 6; b++) el("ab", am, "--x:" + (b % 2 ? r(88, 96) : r(1, 8)) + "%;--w:" + r(26, 40) + "px;--c:" + pick(BC) + ";--t:" + r(18, 30) + "s;--d:-" + r(0, 28) + "s");
+    for (var p = 0; p < 10; p++) el("ap", am, "--x:" + r(0, 100) + "%;--c:" + pick(["#f2b8c0", "#f7e7b0", "#e8826b"]) + ";--t:" + r(12, 22) + "s;--d:-" + r(0, 20) + "s");
+  }
+
+  /* --- Thanh tiến độ cuộn --- */
+  var bar = el("progress", document.body);
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () {
+      var h = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = "scaleX(" + (h > 0 ? Math.min(1, scrollY / h) : 0) + ")"; ticking = false;
+      var hint = document.querySelector(".tp-hint"); if (hint && scrollY > 120) hint.classList.add("gone");
+    });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+
+  /* --- Gợi ý cuộn --- */
+  function showHint() {
+    if (document.querySelector(".tp-hint")) return;
+    var h = el("tp-hint", document.body); h.textContent = "Kéo xuống để xem thêm ↓";
+    setTimeout(function () { h.classList.add("gone"); }, 7000);
+  }
+
+  /* --- Đường viền hoa văn giữa các phần --- */
+  var FL = '<div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 1 14 9 22 12 14 15 12 23 10 15 2 12 10 9Z" fill="currentColor"/></svg></div>';
+  ["section.count", "section.panel", "section.wishes", "section.games", "p.thanks"].forEach(function (sel) {
+    var n = document.querySelector(sel); if (n) n.insertAdjacentHTML("beforebegin", FL);
+  });
+
+  /* --- Hiện dần khi cuộn --- */
+  var targets = [].slice.call(document.querySelectorAll(".wish, .count, .panel .row, .panel .btns, .wishes, .games, .game > .hint, .thanks, .flourish, .celebrant, .sb, .live, #love-draw"));
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); if (e.target.classList.contains("thanks")) fireworks(3); } });
+    }, { threshold: .12, rootMargin: "0px 0px -6% 0px" });
+    targets.forEach(function (t, k) { t.classList.add("rv"); if (t.closest(".panel") && t.classList.contains("row")) t.classList.add(k % 2 ? "rv-r" : "rv-l"); io.observe(t); });
+  }
+
+  /* --- Số đếm ngược nảy mỗi giây --- */
+  var sec = $("cd-s");
+  if (sec && window.MutationObserver && !reduce) {
+    new MutationObserver(function () { sec.classList.remove("tick"); void sec.offsetWidth; sec.classList.add("tick"); }).observe(sec, { childList: true, characterData: true, subtree: true });
+  }
+
+  /* --- Tia sáng khi chạm hoặc click, và vệt sao khi di chuột --- */
+  if (!reduce) {
+    var lastT = 0, active = 0;
+    function spark(x, y, n, far) {
+      for (var k = 0; k < n && active < 40; k++) {
+        var s = document.createElement("span"); s.className = "spark"; s.textContent = pick(["✦", "✧", "★", "·"]);
+        var a = r(0, 6.28), d = r(far * .4, far);
+        s.style.cssText = "left:" + x + "px;top:" + y + "px;--dx:" + Math.cos(a) * d + "px;--dy:" + Math.sin(a) * d + "px;color:" + pick(["#d9bd7e", "#f2b8c0", "#9db4da", "#fffdf6"]) + ";font-size:" + r(10, 18) + "px";
+        document.body.appendChild(s); active++;
+        (function (s) { setTimeout(function () { s.remove(); active--; }, 820); })(s);
+      }
+    }
+    addEventListener("pointerdown", function (e) { if (e.target.closest("input, textarea")) return; spark(e.clientX, e.clientY, 7, 54); }, { passive: true });
+    addEventListener("pointermove", function (e) {
+      if (e.pointerType === "touch") return;
+      var now = performance.now(); if (now - lastT < 70) return; lastT = now; spark(e.clientX, e.clientY, 1, 22);
+    }, { passive: true });
+  }
 })();
 </script>
