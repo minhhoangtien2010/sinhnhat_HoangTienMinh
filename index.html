@@ -639,6 +639,23 @@ body.gated { overflow: hidden; }
 .wish-chips { flex-direction: column; }
 .wish-chips button { text-align: left; border-radius: 12px; padding: 8px 12px; font: 500 13.5px/1.45 var(--f-head); }
 .wish-chips-h { margin: 0; font: 400 12.5px/1.45 var(--f-body); color: var(--ink-soft); }
+/* Điện thoại: rút ngắn chiều dài, vẫn một trang liền */
+@media (max-width: 999px) {
+  .body { gap: 12px; }
+  .pane { gap: 12px; }
+  .flourish { margin: 0; }
+  .deco-band { display: none; }
+  .ico { width: 44px; height: 44px; }
+  .ico svg { width: 22px; height: 22px; }
+  .row { gap: 10px; }
+  .feed { max-height: 170px; }
+  .wish-wall { max-height: 380px; }
+  .zalo-box { gap: 10px; }
+  .qr img { width: 96px; height: 96px; }
+}
+
+.wish-sug summary { cursor: pointer; font: 600 13px var(--f-body); color: var(--blue); padding: 4px 0; }
+.wish-sug[open] summary { margin-bottom: 6px; }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -894,8 +911,10 @@ body.gated { overflow: hidden; }
           <span class="wish-from">Gửi từ: <b id="wish-me">bạn</b></span>
           <span class="wish-count" id="wish-count">0/160</span>
         </div>
-        <p class="wish-chips-h">Chưa biết viết gì? Chạm vào một lời chúc có sẵn để chép vào khung, rồi sửa lại theo ý bạn:</p>
-        <div class="wish-chips" id="wish-chips" aria-label="Lời chúc có sẵn"></div>
+        <details class="wish-sug"><summary>Chưa biết viết gì? Xem lời chúc gợi ý</summary>
+          <p class="wish-chips-h">Chạm vào một lời chúc để chép vào khung, rồi sửa lại theo ý bạn:</p>
+          <div class="wish-chips" id="wish-chips" aria-label="Lời chúc có sẵn"></div>
+        </details>
         <button class="btn big" type="submit" id="wish-send"><span>Gửi lời chúc</span></button>
         <p class="wish-err" id="wish-err" role="alert" hidden></p>
       </form>
